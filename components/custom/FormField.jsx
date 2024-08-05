@@ -21,7 +21,7 @@ const FormField = ({ title, value, placeholder, handleChangeText, otherStyles, k
                     onChange={handleChangeText}
                 />
                 {title == "Password" && (
-                    <Image onClick={() => setShowPassword(!showPassword)} src={!showPassword ? icons.eye : icons.eyeHide} className='w-6 h-6 absolute right-3 bottom-2 cursor-pointer' sizes='contain' />
+                    <Image onClick={() => setShowPassword(!showPassword)} src={!showPassword ? icons.eye : icons.eyeHide} className='w-6 h-6 absolute right-3 bottom-2 cursor-pointer' sizes='contain' alt='eye' />
                 )}
             </div>
         </div>

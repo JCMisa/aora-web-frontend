@@ -6,8 +6,15 @@ import { images } from "../../../public/constants"
 import FormField from '@/components/custom/FormField'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { useAuth } from '@/Context/useAuth'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 const SignUpPage = () => {
+    const { registerUser } = useAuth();
+
+    const router = useRouter();
+
     const [form, setForm] = useState({
         username: '',
         email: '',
@@ -15,7 +22,29 @@ const SignUpPage = () => {
     })
     const [isSubmitting, setIsSubmitting] = useState(false)
 
-    const submit = () => { }
+    const submit = async () => {
+        setIsSubmitting(true)
+        try {
+            const result = await registerUser(form.email, form.username, form.password)
+
+            if (result) {
+                toast(
+                    <p className='text-sm font-bold text-green-500'>
+                        Registered Successfully
+                    </p>
+                )
+                router.push('/dashboard')
+            }
+        } catch (error) {
+            console.log("register error: ", error);
+            toast(
+                <p className='text-sm font-bold text-red-500'>
+                    Internal error occured while registering the user
+                </p>
+            )
+        }
+        setIsSubmitting(false)
+    }
 
     return (
         <div className='p-10'>
@@ -49,7 +78,7 @@ const SignUpPage = () => {
                         otherStyles="mt-7"
                     />
 
-                    <Button onClick={submit} className="mt-7 bg-secondary-100 rounded-xl min-h-[62px] justify-center items-center text-primary font-bold w-full" disabled={isSubmitting}>
+                    <Button onClick={submit} className="mt-7 bg-secondary rounded-xl min-h-[62px] justify-center items-center text-primary font-bold w-full hover:bg-secondary-200" disabled={isSubmitting}>
                         Sign In
                     </Button>
 
