@@ -55,7 +55,7 @@ const SignInPage = () => {
 
         <div className='w-full'>
           <FormField
-            title="Email"
+            title="Username"
             value={form.email}
             handleChangeText={(e) => setForm({ ...form, email: e.target.value })}
             otherStyles="mt-7"

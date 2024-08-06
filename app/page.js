@@ -4,9 +4,11 @@ import Image from "next/image";
 import { images } from "../public/constants"
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/Context/useAuth";
 
 export default function Home() {
   const router = useRouter();
+  const { user, isLoggedIn } = useAuth();
 
   return (
     <div className="p-10">
@@ -21,9 +23,18 @@ export default function Home() {
           <p className="text-gray-400 text-sm">
             Where Creativity Meets Innovation: Embark on a Journey of Limitless Exploration with Aora
           </p>
-          <Button className="bg-secondary text-primary font-bold hover:bg-secondary-200" onClick={() => router.push('/sign-in')}>
-            Continue with Email
-          </Button>
+          {
+            user && isLoggedIn ? (
+              <Button className="bg-secondary text-primary font-bold hover:bg-secondary-200" onClick={() => router.push('/dashboard')}>
+                Continue to Dashboard
+              </Button>
+            ) : (
+              <Button className="bg-secondary text-primary font-bold hover:bg-secondary-200" onClick={() => router.push('/sign-in')}>
+                Continue with Email
+              </Button>
+            )
+          }
+
         </div>
       </div>
     </div>
